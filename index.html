@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBI Tools — Zeitview Internal Blade Inspection</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400&display=swap');
+
+  :root {
+    --bg: #0a0c0e;
+    --surface: #111418;
+    --border: #2a3540;
+    --accent: #00d4ff;
+    --accent3: #00ff88;
+    --danger: #ff2d55;
+    --warn: #ffd600;
+    --text: #c8d8e8;
+    --text-dim: #5a7080;
+    --text-bright: #eef4f8;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Barlow Condensed', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.012) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-family: var(--head);
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--text-bright);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 48px;
+    letter-spacing: 1px;
+  }
+
+  .tools {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .tool-card {
+    display: block;
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 28px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--card-accent, var(--accent));
+    transition: width 0.2s;
+  }
+
+  .tool-card:hover {
+    border-color: var(--card-accent, var(--accent));
+    transform: translateX(4px);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  }
+
+  .tool-card:hover::before { width: 4px; }
+
+  .tool-card.folder { --card-accent: var(--accent); }
+  .tool-card.auditor { --card-accent: var(--danger); }
+
+  .tool-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .tool-name {
+    font-family: var(--head);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--text-bright);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .tool-name span { color: var(--card-accent, var(--accent)); }
+
+  .tool-desc {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .tool-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag-pill {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .tool-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--text-dim);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .tool-card:hover .tool-arrow {
+    color: var(--card-accent, var(--accent));
+    transform: translateY(-50%) translateX(3px);
+  }
+
+  .footer {
+    margin-top: 48px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 2;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .sop-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--danger);
+    background: rgba(255,45,85,0.06);
+    border: 1px solid rgba(255,45,85,0.2);
+    border-radius: 3px;
+    padding: 10px 16px;
+    text-align: center;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .browser-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--warn);
+    background: rgba(255,214,0,0.05);
+    border: 1px solid rgba(255,214,0,0.15);
+    border-radius: 3px;
+    padding: 10px 16px;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">Zeitview // Internal Blade Inspection</div>
+  <h1>IBI <span>TOOLS</span></h1>
+  <div class="subtitle">Wind Turbine Inspection — Data Management Suite</div>
+
+  <div class="sop-note">⚠ SOP: All processes must be completed on the Mac SSD</div>
+
+  <div class="tools">
+
+    <a href="site_architect.html" class="tool-card folder">
+      <div class="tool-num">Tool 01</div>
+      <div class="tool-name">IBI — <span>Folder Creation</span></div>
+      <div class="tool-desc">Creates the complete end-deliverables and RAW backup folder structure on the Mac SSD. Run this in the nacelle before capturing each turbine.</div>
+      <div class="tool-tags">
+        <span class="tag-pill">Nacelle Use</span>
+        <span class="tag-pill">Folder Structure</span>
+        <span class="tag-pill">Filename Generator</span>
+        <span class="tag-pill">Pre-Capture</span>
+      </div>
+      <span class="tool-arrow">→</span>
+    </a>
+
+    <a href="data_auditor.html" class="tool-card auditor">
+      <div class="tool-num">Tool 02</div>
+      <div class="tool-name">Data <span>Auditor</span></div>
+      <div class="tool-desc">End-of-day QC validation engine. Scans your Turbine folder, checks all filenames, video counts, and folder completeness. Issues a Final Pass when everything is clean.</div>
+      <div class="tool-tags">
+        <span class="tag-pill">End of Day</span>
+        <span class="tag-pill">QC Validation</span>
+        <span class="tag-pill">Naming Check</span>
+        <span class="tag-pill">Final Pass</span>
+      </div>
+      <span class="tool-arrow">→</span>
+    </a>
+
+  </div>
+
+  <div class="browser-note">⚡ Requires Chrome or Edge — Safari does not support folder access</div>
+
+  <hr class="divider">
+
+  <div class="footer">
+    ZEITVIEW INTERNAL TOOLS · IBI DATA MANAGEMENT · v1.0<br>
+    USE ON MAC SSD ONLY — DO NOT PROCESS ON EXTERNAL DRIVES
+  </div>
+
+</div>
+</body>
+</html>
