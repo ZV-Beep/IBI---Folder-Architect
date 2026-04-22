@@ -930,9 +930,9 @@
         Click <strong>Select IBI_Workspace Folder &amp; Create Structure</strong>. This builds all 15 folders automatically — you don't need to create them manually.
       </div>
       <div class="modal-action-box">
-        <div class="step-line"><span class="step-n">1.</span><span>Open <strong>Finder</strong> and create a new folder somewhere — Desktop or Mac SSD. Call it <strong>IBI_Workspace</strong></span></div>
-        <div class="step-line"><span class="step-n">2.</span><span>Click the button and <strong>navigate into that IBI_Workspace folder</strong> in the picker</span></div>
-        <div class="step-line"><span class="step-n">3.</span><span>All folders are created instantly</span></div>
+        <div class="step-line"><span class="step-n">1.</span><span>Open <strong>Finder</strong> and create a folder named after your <strong>wind farm</strong> if it doesn't exist yet — e.g. <strong>Moerdijk</strong>. You only do this once per site.</span></div>
+        <div class="step-line"><span class="step-n">2.</span><span>Click the button and <strong>select that site folder</strong> — e.g. Moerdijk</span></div>
+        <div class="step-line"><span class="step-n">3.</span><span>The tool creates <strong>T01 → Blade 1/2/3</strong> inside it. Next turbine, just select the same Moerdijk folder and it adds T02 alongside T01.</span></div>
       </div>
       <div class="modal-warning-box">
         🚫 <strong>Do not select Desktop or Downloads directly</strong> — you must navigate <em>into</em> a folder you created first. Selecting the Desktop root itself will give an error.
@@ -980,12 +980,12 @@
       <div class="modal-step-num">Step 5 of 5</div>
       <div class="modal-step-title">Use the <span>Filename Generator</span></div>
       <div class="modal-step-body">
-        When you need to rename your Gimbal and 360 video files, use the Filename Generator on the right. Select the blade and chamber — it generates the exact correct filename and you can copy it with one click.
+        When you need to rename your Gimbal and 360 video files, use the Filename Generator on the right. Select the blade and chamber — it generates the exact correct filename and you can copy it with one click. Chambers are: <strong>LC</strong> (Leading), <strong>C1</strong> (Central), <strong>TC</strong> (Trailing).
       </div>
       <div class="modal-action-box">
-        <div class="step-line"><span class="step-n">1.</span><span>Select the <strong>Blade number</strong> and <strong>Chamber</strong> (LC, CC, or TE)</span></div>
+        <div class="step-line"><span class="step-n">1.</span><span>Select the <strong>Blade number</strong> and <strong>Chamber</strong> (LC, C1, or TC)</span></div>
         <div class="step-line"><span class="step-n">2.</span><span>Copy the generated filename and use it to rename your file</span></div>
-        <div class="step-line"><span class="step-n">3.</span><span>Always capture in order: <strong>LC → CC → TE</strong></span></div>
+        <div class="step-line"><span class="step-n">3.</span><span>Always capture in order: <strong>LC → C1 → TC</strong></span></div>
       </div>
       <div class="modal-nav">
         <button class="btn-modal-skip" onclick="prevStep()">← Back</button>
@@ -1192,7 +1192,7 @@
         </div>
         <div class="divider" style="margin-top:14px;"></div>
         <div style="margin-top:12px; font-family:var(--mono); font-size:10px; color:var(--text-dim);">
-          // END DELIVERABLES STRUCTURE · 15 folders total · Template per SOP v1.0
+          // SELECT the site folder — turbine + blades created inside it · 13 folders · SOP v1.0
         </div>
       </div>
     </div>
@@ -1205,7 +1205,7 @@
       </div>
       <div class="card" style="border-color: rgba(255,107,0,0.3);">
         <div style="font-family:'Roboto',sans-serif; font-size:14px; color:var(--text); margin-bottom:14px; line-height:1.7;">
-          This creates the RAW backup folder. <strong style="color:#FFFFFF;">Select your IBI_Workspace folder</strong> when the picker opens — same folder you used above. Do not select Desktop or Downloads.
+          This creates the RAW backup folder. <strong style="color:#FFFFFF;">Select your site folder</strong> (e.g. Moerdijk) — same folder you selected above. The RAW folder will be created inside it alongside the turbine folder.
         </div>
         <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:var(--accent3); padding:12px 14px; background:rgba(63,192,194,0.08); border:2px solid rgba(63,192,194,0.3); border-radius:6px; margin-bottom:14px;" id="rawFolderName">
           [SiteName]_[TurbineID]_RAW
@@ -1231,19 +1231,20 @@
             <div class="chamber-grid">
               <div class="chamber-pill">
                 <span class="chamber-code">LC</span>
-                <span class="chamber-name">Leading Edge</span>
+                <span class="chamber-name">Leading Chamber</span>
               </div>
               <div class="chamber-pill">
-                <span class="chamber-code">CC</span>
+                <span class="chamber-code">C1</span>
                 <span class="chamber-name">Central</span>
               </div>
               <div class="chamber-pill">
-                <span class="chamber-code">TE</span>
-                <span class="chamber-name">Trailing Edge</span>
+                <span class="chamber-code">TC</span>
+                <span class="chamber-name">Trailing Chamber</span>
               </div>
             </div>
             <div style="font-family:'Roboto',sans-serif; font-size:12px; color:var(--text); margin-top:8px;">
-              Capture order: <strong style="color:var(--accent3);">LC → CC → TE</strong> always
+              Capture order: <strong style="color:var(--accent3);">LC → C1 → TC</strong> always<br>
+              <span style="color:var(--text-dim); font-size:11px;">LE / CC / TE also accepted but not preferred</span>
             </div>
           </div>
         </div>
@@ -1269,7 +1270,7 @@
             <div class="ref-title">Common Mistakes — Don't Do These</div>
             <div class="ref-detail">
               <span class="bad">✗ Gimball</span> — it's <strong>Gimbal</strong> (one L)<br>
-              <span class="bad">✗ TC or LE</span> — use <strong>TE</strong> and <strong>LC</strong><br>
+              <span style="color:var(--warn);font-weight:700;">~ TE, LE or CC</span> — accepted but <strong>TC, LC and C1</strong> are preferred<br>
               <span class="bad">✗ Spaces in filenames</span> — use underscores only<br>
               <span class="bad">✗ Rendering to external drive</span> — use Mac SSD<br>
               <span class="bad">✗ Moving 360 files separately</span> — always move pairs
@@ -1325,9 +1326,9 @@
             <div class="select-wrapper">
               <select id="genChamber" onchange="generateFilenames()">
                 <option value="">— Select —</option>
-                <option value="LC">LC — Leading Edge</option>
-                <option value="CC">CC — Central</option>
-                <option value="TE">TE — Trailing Edge</option>
+                <option value="LC">LC — Leading Chamber</option>
+                <option value="C1">C1 — Central</option>
+                <option value="TC">TC — Trailing Chamber</option>
               </select>
             </div>
           </div>
@@ -1353,7 +1354,7 @@
         <div style="font-family:var(--mono); font-size:10px; color:var(--text-dim); line-height:1.8;">
           SCHEME: [SiteName]_[TurbineID]_Blade[N]_[Chamber]_Gimbal.mp4<br>
           SCHEME: [SiteName]_[TurbineID]_Blade[N]_[Chamber]_360.mp4<br>
-          CAPTURE ORDER: LC → CC → TE (always start from LE chamber)
+          CAPTURE ORDER: LC → C1 → TC (always start from LE chamber)
         </div>
       </div>
     </div>
@@ -1435,7 +1436,7 @@
     const siteLabel = siteName || '[SiteName]';
     const turbineLabel = turbineId || '[TurbineID]';
 
-    document.getElementById('treeSiteRoot').textContent = `📁 ${siteLabel}`;
+    document.getElementById('treeSiteRoot').textContent = `📁 ${siteLabel}  ← select this folder`;
     document.getElementById('treeTurbine').textContent = `  └─ 📁 ${turbineLabel}`;
     document.getElementById('rawFolderName').textContent = `${siteLabel}_${turbineLabel}_RAW`;
 
@@ -1468,12 +1469,18 @@
     try {
       setStatus('SELECTING...', false);
       const rootDir = await window.showDirectoryPicker({ mode: 'readwrite' });
-      addLog(`Drive selected: ${rootDir.name}`, 'info');
+      // Verify the selected folder matches the site name - warn if not
+      if (rootDir.name !== siteName) {
+        addLog(`⚠ Selected folder "${rootDir.name}" — expected site folder "${siteName}". Continuing anyway.`, 'warn');
+        toast(`Note: folder name "${rootDir.name}" doesn't match site name "${siteName}"`, 'warn');
+      } else {
+        addLog(`✓ Site folder selected: ${rootDir.name}`, 'ok');
+      }
 
       const btn = document.getElementById('initBtn');
       btn.disabled = true;
 
-      const structure = buildStructure(siteName, turbineId);
+      const structure = buildStructure(turbineId);
       let created = 0;
       const total = structure.length;
 
@@ -1514,14 +1521,15 @@
     }
   }
 
-  function buildStructure(site, turbine) {
+  function buildStructure(turbine) {
+    // Structure is built INSIDE the site folder the user selects.
+    // We no longer create the site folder — they select it.
     const paths = [];
-    paths.push([site]);
-    paths.push([site, turbine]);
+    paths.push([turbine]);
     ['Blade 1', 'Blade 2', 'Blade 3'].forEach(blade => {
-      paths.push([site, turbine, blade]);
+      paths.push([turbine, blade]);
       ['BladeID', 'Videos', 'Root Photos'].forEach(sub => {
-        paths.push([site, turbine, blade, sub]);
+        paths.push([turbine, blade, sub]);
       });
     });
     return paths;
